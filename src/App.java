@@ -9,6 +9,7 @@ import java.net.Socket;
 import javax.swing.JProgressBar;
 
 public class App {
+    
 
     private static DataOutputStream dataOutputStream = null;
     private static DataInputStream dataInputStream = null;
