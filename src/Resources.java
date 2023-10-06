@@ -15,5 +15,8 @@ public class Resources {
                     + "<a href=\"https://mcgillqa.service-now.com/itportal?id=kb_article_view&sysparm_article=KB0012126&sys_kb_id=a6cfa57fdb5bb410701f5a6a689619ea&spa=1\">"
                     + "https://mcgillqa.service-now.com/itportal?id=kb_article_view&sysparm_article=KB0012126&sys_kb_id=a6cfa57fdb5bb410701f5a6a689619ea&spa=1"
                     + "</a>"
+                    + "<br>"
+                    + "<br>"
+                    + "Using mobile hotspot can also speed things up since then a router won't be a bottleneck."
                     + "</html>";
 }
