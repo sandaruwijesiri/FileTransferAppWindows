@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,16 +11,22 @@ import java.awt.event.ActionListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicProgressBarUI;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLFrameHyperlinkEvent;
 
 public class UI extends JFrame{
 
@@ -27,6 +34,7 @@ public class UI extends JFrame{
 
     private JTextField ipData = new JTextField();
 
+    private JButton instructions = new JButton("Instructions");
     private JButton send = new JButton("Send File");
     private JButton receive = new JButton("Receive File");
     public JProgressBar progressBar = new JProgressBar(0,100);
@@ -54,6 +62,8 @@ public class UI extends JFrame{
         panel.add(send);
         receive.addActionListener(new ReceiveL());
         panel.add(receive);
+        instructions.addActionListener(new InstructionsL());
+        panel.add(instructions);
         cp.add(panel, BorderLayout.SOUTH);
         
         panel = new JPanel();
@@ -118,6 +128,38 @@ public class UI extends JFrame{
             }
         }
         
+    }
+
+    JFrame jFrame = null;
+    class InstructionsL implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if(jFrame==null){
+                jFrame = new JFrame();
+                JEditorPane editorPane = new JEditorPane("text/html",Resources.instructions);
+                editorPane.setEditable(false);
+                editorPane.addHyperlinkListener(new HyperlinkListener() {
+                    public void hyperlinkUpdate(HyperlinkEvent e) {
+                        if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                            Desktop desktop = Desktop.getDesktop();
+                            try {
+                                desktop.browse(e.getURL().toURI());
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                });
+                JPanel jPanel = new JPanel();
+                jPanel.setBackground(new Color(56, 78, 94, 255));
+                jPanel.add(editorPane);
+                jFrame.getContentPane().add(jPanel, BorderLayout.CENTER);
+                jFrame.setSize(width/2, height/2);
+                jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                jFrame.setVisible(true);
+            }else{
+                jFrame.setVisible(true);
+            }
+        }
     }
 
     class ReceiveL implements ActionListener {
